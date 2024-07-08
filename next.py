@@ -1,10 +1,9 @@
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-import numpy as np
+from sklearn.metrics import mean_squared_error
 
-
-# Step 1: Parse the provided data into a structured format
 data = [
     {"Bit Range": 1, "Private Key": "0000000000000000000000000000000000000000000000000000000000000001", "Address": "1BgGZ9tcN4rm9KBzDn7KprQz87SZ26SAMH"},
     {"Bit Range": 2, "Private Key": "0000000000000000000000000000000000000000000000000000000000000003", "Address": "1CUNEBjYrCn2y1SdiUMohaKUi4wpP326Lb"},
@@ -73,38 +72,8 @@ data = [
     {"Bit Range": 65, "Private Key": "000000000000000000000000000000000000000000000001a838b13505b26867", "Address": "18ZMbwUFLMHoZBbfpCjUJQTCMCbktshgpe"}
 ]
 
-'''
-# Convert the data into a DataFrame
-df = pd.DataFrame(data)
-
-# Convert the Private Key to numeric format for model training
-df['Private Key'] = df['Private Key'].apply(lambda x: int(x, 16))
-
-# Step 2: Generate features and labels from the data
-X = df[['Bit Range']]
-y = df['Private Key']
-
-# Step 3: Train a machine learning model using the features and labels
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-model = LinearRegression()
-model.fit(X_train, y_train)
-
-# Step 4: Use the model to predict potential private keys
-y_pred = model.predict(X_test)
-
-# Print the predictions
-for bit_range, pred in zip(X_test['Bit Range'], y_pred):
-    print(f"Bit Range: {bit_range}, Predicted Private Key: {pred:.0f}")
-
-# Optional: Evaluate the model performance
-from sklearn.metrics import mean_absolute_error
-
-mae = mean_absolute_error(y_test, y_pred)
-print(f"Mean Absolute Error: {mae:.0f}")
-
-'''
-
+# Assuming the data is in a CSV file or some other format
+# data = pd.read_csv('data.csv')
 df = pd.DataFrame(data)
 
 # Convert Private Key from hex string to an integer for better handling
@@ -115,17 +84,22 @@ X = df[['Bit Range']]
 y = df['Private Key (int)']
 
 # Split the data into training and test sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=142)
 
 # Train the model
 model = LinearRegression()
 model.fit(X_train, y_train)
 
 # Predict the private key for Bit Range 66
-bit_range_66 = np.array([[66]])
+bit_range_66 = pd.DataFrame({'Bit Range': [66]})
 predicted_private_key_66 = model.predict(bit_range_66)
 
 # Convert the predicted private key back to hex format
 predicted_private_key_66_hex = hex(int(predicted_private_key_66[0]))[2:].zfill(64)
 
+# Calculate the mean squared error on the test set
+y_pred = model.predict(X_test)
+mse = mean_squared_error(y_test, y_pred)
+
 print(f"Predicted Private Key for Bit Range 66: {predicted_private_key_66_hex}")
+print(f"Mean Squared Error: {mse}")
