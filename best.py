@@ -42,7 +42,7 @@ def split_data(df):
     """
     X = df[['Bit Range']]
     y = df['Private Key (int)']
-    return train_test_split(X, y, test_size=0.2, random_state=42)
+    return train_test_split(X, y, test_size=0.001, random_state=42)
 
 def train_model(X_train, y_train):
     """
