@@ -70,7 +70,8 @@ data = [
     {"Bit Range": 62, "Private Key": "000000000000000000000000000000000000000000000000363d541eb611abee", "Address": "1Me6EfpwZK5kQziBwBfvLiHjaPGxCKLoJi"},
     {"Bit Range": 63, "Private Key": "0000000000000000000000000000000000000000000000007cce5efdaccf6808", "Address": "1NpYjtLira16LfGbGwZJ5JbDPh3ai9bjf4"},
     {"Bit Range": 64, "Private Key": "000000000000000000000000000000000000000000000000f7051f27b09112d4", "Address": "16jY7qLJnxb7CHZyqBP8qca9d51gAjyXQN"},
-    {"Bit Range": 65, "Private Key": "000000000000000000000000000000000000000000000001a838b13505b26867", "Address": "18ZMbwUFLMHoZBbfpCjUJQTCMCbktshgpe"}
+    {"Bit Range": 65, "Private Key": "000000000000000000000000000000000000000000000001a838b13505b26867", "Address": "18ZMbwUFLMHoZBbfpCjUJQTCMCbktshgpe"},
+    # {"Bit Range": 66, "Private Key": "000000000000000000000000000000000000000000000003ffffffffffffffff", "Address": "13zb1hqbwvsc2s7ztznp2g4undnnpdh5so"}
 ]
 
 '''
@@ -115,7 +116,7 @@ X = df[['Bit Range']]
 y = df['Private Key (int)']
 
 # Split the data into training and test sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1, random_state=66)
 
 # Train the model
 model = LinearRegression()
